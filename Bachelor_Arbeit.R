@@ -461,7 +461,7 @@ upset1_m = make_comb_mat(upset1)
 upset2_m = make_comb_mat(upset2)
 
 u_my1 <- UpSet(upset1_m, top_annotation = HeatmapAnnotation(
-  "Überlappende\nGene" = anno_barplot(comb_size(upset1_m),
+  "Ãœberlappende\nGene" = anno_barplot(comb_size(upset1_m),
                                       border = FALSE, 
                                       gp = gpar(fill = plasma(4)[comb_degree(upset1_m)]),
                                       height = unit(6, "cm"), ylim = c(0, 3000)),
@@ -476,7 +476,7 @@ u_my1 <- UpSet(upset1_m, top_annotation = HeatmapAnnotation(
   right_annotation = NULL)
 
 u_my2 <- UpSet(upset2_m, top_annotation = HeatmapAnnotation(
-  "Überlappende\nGene" = anno_barplot(comb_size(upset2_m),
+  "Ãœberlappende\nGene" = anno_barplot(comb_size(upset2_m),
                                       border = FALSE, 
                                       gp = gpar(fill = plasma(4)[comb_degree(upset2_m)]),
                                       height = unit(6, "cm"), ylim = c(0, 3000)),
@@ -552,7 +552,7 @@ univ <- rbind(go_ne, go_oe, go_oe_hyp)
 univ <- univ[order(univ$log2FoldChange, decreasing = TRUE),]
 univ_ez <- bitr(geneID = univ$name, fromType = "ENSEMBL", toType = "ENTREZID", OrgDb = org.Hs.eg.db, drop = TRUE)
 
-# this universe used because I wanted to see only the regulated processes in one or more conditions to see more differences between them
+# this universe is used because I wanted to enrich only the regulated processes caused by hypoxia, overexpression of gene of interest or both of them 
 # with a default universe less differences are detected and many processes are up- and downregulated in the same time in same kondition
 
 ########### Analysis and visualisation
@@ -693,7 +693,7 @@ intron_retention_oe_up <- 12
 intron_retention_oe_down <- 8
 sum_oe <- five_prime_oe+three_prime_oe+exon_skipping_oe+intron_retention_oe
 
-splicing_reg_df <- data.frame(spleißereignis = c("5' ASS", "3' ASS","AE", "IR", "5' ASS", "3' ASS","AE", "IR",
+splicing_reg_df <- data.frame(spleiÃŸereignis = c("5' ASS", "3' ASS","AE", "IR", "5' ASS", "3' ASS","AE", "IR",
                                                  "5' ASS", "3' ASS","AE", "IR", "5' ASS", "3' ASS","AE", "IR"),
                               regulation = c("hoch", "hoch", "hoch", "hoch", "runter", "runter", "runter", "runter",
                                              "hoch", "hoch", "hoch", "hoch", "runter", "runter", "runter", "runter"),
@@ -706,7 +706,7 @@ splicing_reg_df <- data.frame(spleißereignis = c("5' ASS", "3' ASS","AE", "IR", 
 
 splicing_reg_df$regulation <- factor(splicing_reg_df$regulation, levels = c("hoch", "runter"))
 
-ggplot(data=splicing_reg_df, aes(x=spleißereignis, y=zahl*100, fill=regulation)) +
+ggplot(data=splicing_reg_df, aes(x=spleiÃŸereignis, y=zahl*100, fill=regulation)) +
   ylab("prozent")+
   geom_bar(stat="identity", position=position_dodge())+
   scale_fill_manual(values=c("gold", "dodgerblue4"))+
@@ -714,8 +714,8 @@ ggplot(data=splicing_reg_df, aes(x=spleißereignis, y=zahl*100, fill=regulation))
   theme_bw()
 
 out_df_ne <- data.frame(
-  spleißereignis = c("5' ASS binär","5' ASS komplex", "3' ASS binär","3' ASS komplex", "AE binär",
-                     "AE komplex","IR binär","IR komplex", "5' ASS", "3' ASS",
+  spleiÃŸereignis = c("5' ASS binÃ¤r","5' ASS komplex", "3' ASS binÃ¤r","3' ASS komplex", "AE binÃ¤r",
+                     "AE komplex","IR binÃ¤r","IR komplex", "5' ASS", "3' ASS",
                      "AE", "IR"),
   value = c(as.numeric(five_prime_only_ne), as.numeric(five_prime_other_ne), as.numeric(three_prime_only_ne),as.numeric(three_prime_other_ne),
             as.numeric(exon_skipping_only_ne),as.numeric(exon_skipping_other_ne), as.numeric(intron_retention_only_ne),
@@ -725,8 +725,8 @@ out_df_ne <- data.frame(
 )
 
 out_df_oe <- data.frame(
-  spleißereignis = c("5' ASS binär","5' ASS komplex", "3' ASS binär","3' ASS komplex", "AE binär",
-                     "AE komplex","IR binär","IR komplex", "5' ASS", "3' ASS",
+  spleiÃŸereignis = c("5' ASS binÃ¤r","5' ASS komplex", "3' ASS binÃ¤r","3' ASS komplex", "AE binÃ¤r",
+                     "AE komplex","IR binÃ¤r","IR komplex", "5' ASS", "3' ASS",
                      "AE", "IR"),
   value = c(as.numeric(five_prime_only_oe), as.numeric(five_prime_other_oe), as.numeric(three_prime_only_oe),as.numeric(three_prime_other_oe),
             as.numeric(exon_skipping_only_oe),as.numeric(exon_skipping_other_oe), as.numeric(intron_retention_only_oe),
@@ -735,7 +735,7 @@ out_df_oe <- data.frame(
   float = c(rep(2,8), rep(1,4))
 )
 
-pie1 <- ggplot(out_df_ne, aes(x = float,y = value,fill = spleißereignis)) + 
+pie1 <- ggplot(out_df_ne, aes(x = float,y = value,fill = spleiÃŸereignis)) + 
   geom_bar(width = 1, stat = "identity") + 
   scale_fill_manual(values = c("midnightblue", "#B2D5FF", "whitesmoke", "violetred4", "#9D75AF",
                                "#F8F3FF", "coral", "#67ABC6", "#FFEDE9", "yellow2", "#89C2AD", "#FCFEEC")) + 
@@ -745,7 +745,7 @@ pie1 <- ggplot(out_df_ne, aes(x = float,y = value,fill = spleißereignis)) +
         legend.title=element_text(size=10))
 
 
-pie2 <- ggplot(out_df_oe, aes(x = float,y = value,fill = spleißereignis)) + 
+pie2 <- ggplot(out_df_oe, aes(x = float,y = value,fill = spleiÃŸereignis)) + 
   geom_bar(width = 1, stat = "identity") + 
   scale_fill_manual(values = c("midnightblue", "#B2D5FF", "whitesmoke", "violetred4", "#9D75AF",
                                "#F8F3FF", "coral", "#67ABC6", "#FFEDE9", "yellow2", "#89C2AD", "#FCFEEC"),
